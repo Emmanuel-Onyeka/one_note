@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:one_note_clone/screens/grid.dart';
-import 'package:one_note_clone/screens/user_info.dart';
+import './grid.dart';
+import './user_info.dart';
+import '../constants.dart';
 import '../widgets/text_card.dart';
-import '../widgets/containerView.dart';
 import 'notebook_view.dart';
 import 'filter.dart';
 import './search.dart';
+import '../widgets/list_mode.dart';
+import 'note_details_screen.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -17,29 +19,25 @@ class _HomePageState extends State<HomePage> {
 
   // Navigates to the home or Notebook page based on its value
   bool isHome = true;
-
   bool isList = true;
 
   @override
   void dispose() {
     super.dispose();
-
     controller.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
-    Color bookControllerColor = Theme
-        .of(context)
-        .primaryColor;
+    Color bookControllerColor = Theme.of(context).primaryColor;
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        title: Text(
+        title: const Text(
           'OneNote',
         ),
         leading: Container(
-          margin: EdgeInsets.only(
+          margin: const EdgeInsets.only(
             left: 10.0,
           ),
           child: GestureDetector(
@@ -47,7 +45,7 @@ class _HomePageState extends State<HomePage> {
               Navigator.push(
                   context, MaterialPageRoute(builder: (context) => UserInfo()));
             },
-            child: CircleAvatar(
+            child: const CircleAvatar(
               radius: 50.0,
               backgroundColor: Colors.blue,
               child: Text(
@@ -63,7 +61,7 @@ class _HomePageState extends State<HomePage> {
         leadingWidth: 45.0,
         actions: [
           IconButton(
-            padding: EdgeInsets.only(
+            padding: const EdgeInsets.only(
               right: 10.0,
             ),
             onPressed: () {
@@ -74,7 +72,7 @@ class _HomePageState extends State<HomePage> {
                     builder: (context) => SearchPage(),
                   ));
             },
-            icon: Icon(
+            icon: const Icon(
               Icons.search,
               size: 35.0,
             ),
@@ -85,100 +83,83 @@ class _HomePageState extends State<HomePage> {
         crossAxisAlignment: CrossAxisAlignment.stretch,
         //mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Expanded(
-            flex: 1,
-            child: Container(
-              color: Color(0xff1e1e1d),
-              height: 60.0,
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Container(
-                    decoration: BoxDecoration(
-                      color: Color(0xff000000),
-                      borderRadius: BorderRadius.circular(40.0),
-                    ),
-                    margin: EdgeInsets.only(left: 10.0),
-                    child: Row(
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isHome = true;
-                              controller.animateToPage(
-                                0,
-                                duration: Duration(seconds: 1),
-                                curve: Curves.easeOut,
-                              );
-                            });
-                          },
-                          child: BuildText(
-                            label: 'Home',
-                            colour: isHome ? bookControllerColor : Colors.black,
-                          ),
-                        ),
-                        SizedBox(
-                          width: 10.0,
-                        ),
-                        GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isHome = false;
-                              controller.animateToPage(
-                                1,
-                                duration: Duration(seconds: 1),
-                                curve: Curves.easeInOut,
-                              );
-                            });
-                          },
-                          child: BuildText(
-                            label: 'Notebooks',
-                            colour:
-                            !isHome ? bookControllerColor : Colors.black,
-                          ),
-                        ),
-                      ],
-                    ),
+          Container(
+            color: const Color(0xff1e1e1d),
+            height: 80.0,
+            child: Row(
+              children: [
+                Container(
+                  decoration: BoxDecoration(
+                    color: const Color(0xff000000),
+                    borderRadius: BorderRadius.circular(40.0),
                   ),
-                  Row(
+                  margin: const EdgeInsets.only(left: 10.0),
+                  child: Row(
                     children: [
-                      IconButton(
-                        onPressed: () {
-                          showModalBottomSheet(
-                              context: context,
-                              builder: (context) => FilterModalView());
-                        },
-                        icon: Icon(
-                          Icons.tune,
-                        ),
-                      ),
-                      SizedBox(
-                        width: 10.0,
-                      ),
-                      IconButton(
-                        onPressed: () {
+                      GestureDetector(
+                        onTap: () {
                           setState(() {
-                            isList = !isList;
+                            isHome = true;
+                            controller.animateToPage(
+                              0,
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.easeOut,
+                            );
                           });
                         },
-                        icon: Icon(
-                          Icons.dashboard,
+                        child: BuildText(
+                          label: 'Home',
+                          colour: isHome ? bookControllerColor : Colors.black,
                         ),
                       ),
-                      //Todo: remove sized box
-                      SizedBox(
-                        width: 8.0,
+                      GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isHome = false;
+                            controller.animateToPage(
+                              1,
+                              duration: const Duration(seconds: 1),
+                              curve: Curves.easeInOut,
+                            );
+                          });
+                        },
+                        child: BuildText(
+                          label: 'Notebooks',
+                          colour: !isHome ? bookControllerColor : Colors.black,
+                        ),
                       ),
                     ],
-                  )
-                ],
-              ),
+                  ),
+                ),
+                const Spacer(),
+                IconButton(
+                  onPressed: () {
+                    showModalBottomSheet(
+                        context: context,
+                        builder: (context) => FilterModalView());
+                  },
+                  icon: const Icon(
+                    Icons.tune,
+                  ),
+                ),
+                const SizedBox(
+                  width: 10.0,
+                ),
+                IconButton(
+                  onPressed: () {
+                    setState(() {
+                      isList = !isList;
+                    });
+                  },
+                  icon: const Icon(
+                    Icons.dashboard,
+                  ),
+                ),
+              ],
             ),
           ),
           Expanded(
-            flex: 7,
             child: PageView(
-              //TODO: set the logic for the scroll behaviour(Try using a more complex if statement)
               controller: controller,
               onPageChanged: (index) {
                 setState(() {
@@ -190,91 +171,71 @@ class _HomePageState extends State<HomePage> {
                 });
               },
               children: [
-                //container for Home
-
+                //Home
                 Container(
-                  margin: EdgeInsets.symmetric(
+                  margin: const EdgeInsets.symmetric(
                     vertical: 10.0,
                     horizontal: 10.0,
                   ),
-
-                  //Using ternary to switch between ListView and GridView
-
-                  child: isList
-                      ? ListView(
-                    children: [
-                      ContainerView(),
-                      ContainerView(),
-                      ContainerView(),
-                      ContainerView(),
-                    ],
-                  )
-                      : MyGridBuilder(),
+                  child: isList ? ListMode() : GridBuilder(),
                 ),
-                //Container for the Notebook page
-
-                Container(
-                  child: ListView(
-                    children: [
-                      NoteBook(),
-                    ],
-                  ),
-                )
+                //Notebook
+                const NoteBookView(),
               ],
             ),
           ),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: Container(
-                height: 70.0,
-                width: double.infinity,
-                decoration: BoxDecoration(
-                  color: Theme
-                      .of(context)
-                      .primaryColor,
-                  borderRadius: BorderRadius.only(
-                    topRight: Radius.circular(15.0),
-                    topLeft: Radius.circular(
-                      15.0,
-                    ),
+          Container(
+            height: 70.0,
+            decoration: BoxDecoration(
+              color: Theme.of(context).primaryColor,
+              borderRadius: const BorderRadius.only(
+                topRight: Radius.circular(15.0),
+                topLeft: Radius.circular(15.0),
+              ),
+            ),
+            padding: const EdgeInsets.symmetric(horizontal: 10),
+            child: Row(
+              children: [
+                IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pushNamed(NoteDetailScreen.routeName);
+                  },
+                  icon: const Icon(
+                    Icons.add,
+                    size: 30,
                   ),
                 ),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Expanded(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Icon(
-                              Icons.add,
-                            ),
-                            SizedBox(
-                              width: 15.0,
-                            ),
-                            Text('Page'),
-                          ],
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          Icon(
-                            Icons.brush,
-                          ),
-                          Icon(Icons.photo_camera),
-                          Icon(Icons.mic),
-                          Icon(Icons.more_vert),
-                        ],
-                      ),
-                    ),
-                  ],
+                const SizedBox(
+                  width: 15.0,
                 ),
-              ),
+                Text(
+                  'Page',
+                  style: kNormalTextStyle.copyWith(
+                    fontSize: 20,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+                const Spacer(),
+                const Icon(
+                  Icons.brush,
+                  size: 25,
+                ),
+                const SizedBox(width: 15),
+                const Icon(
+                  Icons.photo_camera,
+                  size: 25,
+                ),
+                const SizedBox(width: 15),
+                const Icon(
+                  Icons.mic,
+                  size: 25,
+                ),
+                const SizedBox(width: 15),
+                const Icon(
+                  Icons.more_vert,
+                  size: 25,
+                ),
+              ],
             ),
           ),
         ],

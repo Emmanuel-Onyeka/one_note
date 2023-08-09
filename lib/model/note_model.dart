@@ -1,12 +1,15 @@
 class Note {
-  String title;
-  String body;
-  String category;
-  String uploadTime;
+  final String id;
+  final String title;
+  final String body;
+  final String category;
+  final DateTime dateCreated;
 
-  Note(
-      {required this.title,
-      required this.body,
-      required this.category,
-      required this.uploadTime});
+  Note({
+    required this.id,
+    required this.title,
+    required this.body,
+    required this.category,
+    required this.dateCreated,
+  });
 }

@@ -42,7 +42,7 @@ class SearchPage extends StatelessWidget {
             Expanded(
               child: ListView(
                 children: [
-                  NoteBook(),
+                  NoteBookView(),
                 ],
               ),
             )
