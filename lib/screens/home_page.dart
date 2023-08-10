@@ -193,7 +193,10 @@ class _HomePageState extends State<HomePage> {
                 topLeft: Radius.circular(15.0),
               ),
             ),
-            padding: const EdgeInsets.symmetric(horizontal: 10),
+            //Navigation Bar
+            padding: const EdgeInsets.symmetric(
+              horizontal: 10,
+            ),
             child: Row(
               children: [
                 IconButton(
@@ -209,7 +212,7 @@ class _HomePageState extends State<HomePage> {
                   width: 15.0,
                 ),
                 Text(
-                  'Page',
+                  'Notes',
                   style: kNormalTextStyle.copyWith(
                     fontSize: 20,
                     fontWeight: FontWeight.w400,

@@ -14,7 +14,7 @@ class DataClass extends ChangeNotifier {
       id: DateTime.now().toIso8601String(),
       title: 'Learning Schedule',
       body: 'MVVM, folder structure, Restful APIs',
-      category: 'Learning',
+      category: 'Python',
       dateCreated: DateTime.now(),
     ),
     Note(
@@ -55,7 +55,7 @@ class DataClass extends ChangeNotifier {
     _userNotesList.forEach((element) {
       categories.add(element.category);
     });
-    return categories;
+    return categories.toSet().toList();
   }
 
   List<Note> sortNoteByCategory(String cat) {
@@ -64,7 +64,7 @@ class DataClass extends ChangeNotifier {
     // _userNotesList.forEach((element) {
     //   if (element.category == cat) {
     //     note.add(element);
-    //   }
+    //   }List<int> uniqueNumbers = numbers.toSet().toList();
     // });
     return note;
   }
@@ -73,5 +73,23 @@ class DataClass extends ChangeNotifier {
     return _userNotesList.firstWhere(
       (element) => element.id == id,
     );
+  }
+
+  void updateNote(String noteId, Note note) {
+    int noteIndex = _userNotesList.indexWhere(
+      (element) => element.id == noteId,
+    );
+    _userNotesList[noteIndex] = note;
+
+    notifyListeners();
+  }
+
+  void deleteNote(String id) {
+    int noteIndex = _userNotesList.indexWhere(
+      (element) => element.id == id,
+    );
+    _userNotesList.removeAt(noteIndex);
+
+    notifyListeners();
   }
 }

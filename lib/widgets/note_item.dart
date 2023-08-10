@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import '../constants.dart';
-import '../screens/note_details_screen.dart';
 import '../screens/note_details_screen.dart';
 
 class NoteBookItem extends StatelessWidget {
@@ -30,7 +31,7 @@ class NoteBookItem extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Text(
+                  Text(
                     'my Notes',
                     style: kSmallTextStyle,
                   ),
@@ -46,33 +47,44 @@ class NoteBookItem extends StatelessWidget {
                   ),
                 ],
               ),
+              const SizedBox(height: 3.0),
+              Text(
+                notes.title,
+                style: kNormalTextStyle,
+              ),
+              const SizedBox(height: 3.0),
+              Text(
+                notes.body,
+                style: kNormalTextStyle,
+              ),
               const SizedBox(height: 5.0),
-              Text(notes.title),
-              const SizedBox(height: 5.0),
-              Text(notes.body),
-              const SizedBox(height: 7.0),
-              Row(
-                children: [
-                  Container(
-                    height: 20.0,
-                    width: 15.0,
-                    color: const Color(0xffbfaae3),
-                    child: Icon(
-                      Icons.subject,
-                      color: Theme.of(context).scaffoldBackgroundColor,
-                      size: 12.0,
+              Expanded(
+                child: Row(
+                  children: [
+                    Container(
+                      height: 17.0,
+                      width: 15.0,
+                      color: const Color(0xffbfaae3),
+                      child: Icon(
+                        Icons.subject,
+                        color: Theme.of(context).scaffoldBackgroundColor,
+                        size: 7.0,
+                      ),
                     ),
-                  ),
-                  const SizedBox(
-                    width: 15.0,
-                  ),
-                  const Text(
-                    'Notebook page',
-                    style: kSmallTextStyle,
-                  ),
-                  const Spacer(),
-                  Text(notes.dateCreated.toIso8601String()),
-                ],
+                    const SizedBox(
+                      width: 10.0,
+                    ),
+                    Text(
+                      'Notebook',
+                      style: kSmallTextStyle,
+                    ),
+                    const Spacer(),
+                    Text(
+                      DateFormat('dd-MM').format(notes.dateCreated),
+                      style: kSmallTextStyle,
+                    ),
+                  ],
+                ),
               ),
             ],
           ),

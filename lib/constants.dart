@@ -1,14 +1,23 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 
-const kNormalTextStyle = TextStyle(
-  color: Color(0xffeeeeee),
+var kNormalTextStyle = GoogleFonts.roboto(
+  textStyle: const TextStyle(
+    color: Color(0xffeeeeee),
+    fontWeight: FontWeight.w500,
+  ),
 );
 
-const kPurpleTextStyle = TextStyle(
-  color: Color(0xffafa0c9),
+var kPurpleTextStyle = GoogleFonts.roboto(
+  textStyle: const TextStyle(
+    color: Color(0xffafa0c9),
+    fontWeight: FontWeight.w400,
+  ),
 );
 
-const kSmallTextStyle = TextStyle(
-  color: Colors.white54,
-  fontSize: 12.0,
+var kSmallTextStyle = GoogleFonts.roboto(
+  textStyle: const TextStyle(
+    color: Color(0xffeeeeee),
+    fontWeight: FontWeight.w400,
+  ),
 );

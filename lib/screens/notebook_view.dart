@@ -35,7 +35,7 @@ class _NoteBookViewState extends State<NoteBookView> {
               title: Text(
                 data.getNoteCategories[index],
               ),
-              trailing: const Text(
+              trailing: Text(
                 'Default',
                 style: kSmallTextStyle,
               ),

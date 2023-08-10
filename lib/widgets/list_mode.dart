@@ -9,18 +9,39 @@ import '../model/note_model.dart';
 import './note_item.dart';
 
 class ListMode extends StatelessWidget {
-  List<Note> notes = [];
-
   @override
   Widget build(BuildContext context) {
-    notes = Provider.of<DataClass>(context).userList;
-    return ListView.builder(
-      itemCount: notes.length,
-      itemBuilder: (BuildContext context, int index) {
-        return NoteBookItem(
-          notes: notes[index],
-        );
-      },
-    );
+    //TODO: check for error
+    var data = Provider.of<DataClass>(context, listen: false);
+    var notes = data.userList;
+    return notes.isEmpty
+        ? Container(
+            margin: const EdgeInsets.all(10),
+            child: const Text('You have no notes yet'),
+          )
+        : ListView.builder(
+            itemCount: notes.length,
+            itemBuilder: (BuildContext context, int index) {
+              return Dismissible(
+                direction: DismissDirection.endToStart,
+                onDismissed: (direction) {
+                  data.deleteNote(notes[index].id);
+                },
+                background: Container(
+                  alignment: Alignment.centerRight,
+                  color: Theme.of(context).scaffoldBackgroundColor,
+                  child: const Icon(
+                    Icons.delete,
+                    size: 40,
+                    color: Colors.white,
+                  ),
+                ),
+                key: Key(notes[index].id),
+                child: NoteBookItem(
+                  notes: notes[index],
+                ),
+              );
+            },
+          );
   }
 }
