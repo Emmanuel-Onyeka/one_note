@@ -12,7 +12,7 @@ class ListMode extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //TODO: check for error
-    var data = Provider.of<DataClass>(context, listen: false);
+    var data = Provider.of<DataClass>(context);
     var notes = data.userList;
     return notes.isEmpty
         ? Container(

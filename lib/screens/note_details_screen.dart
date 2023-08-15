@@ -70,6 +70,8 @@ class _NoteDetailScreenState extends State<NoteDetailScreen> {
       dateCreated: DateTime.now(),
     );
 
+//TODO: Get data form database
+
     if (currentNote.id == '') {
       data.addNote(newNote);
     } else {

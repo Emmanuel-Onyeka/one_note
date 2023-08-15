@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "418943871887",
+    "project_id": "one-note-bb1df",
+    "storage_bucket": "one-note-bb1df.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:418943871887:android:2c21f1c61b491a777639fa",
+        "android_client_info": {
+          "package_name": "com.example.one_note_clone"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "418943871887-9b41b0262255re079q2i0pvlhn7am71n.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAPe4uOXkyNCrMoAd6moe060IzCE8sf8SI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "418943871887-9b41b0262255re079q2i0pvlhn7am71n.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

@@ -58,33 +58,31 @@ class NoteBookItem extends StatelessWidget {
                 style: kNormalTextStyle,
               ),
               const SizedBox(height: 5.0),
-              Expanded(
-                child: Row(
-                  children: [
-                    Container(
-                      height: 17.0,
-                      width: 15.0,
-                      color: const Color(0xffbfaae3),
-                      child: Icon(
-                        Icons.subject,
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        size: 7.0,
-                      ),
+              Row(
+                children: [
+                  Container(
+                    height: 17.0,
+                    width: 15.0,
+                    color: const Color(0xffbfaae3),
+                    child: Icon(
+                      Icons.subject,
+                      color: Theme.of(context).scaffoldBackgroundColor,
+                      size: 7.0,
                     ),
-                    const SizedBox(
-                      width: 10.0,
-                    ),
-                    Text(
-                      'Notebook',
-                      style: kSmallTextStyle,
-                    ),
-                    const Spacer(),
-                    Text(
-                      DateFormat('dd-MM').format(notes.dateCreated),
-                      style: kSmallTextStyle,
-                    ),
-                  ],
-                ),
+                  ),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
+                  Text(
+                    'Notebook',
+                    style: kSmallTextStyle,
+                  ),
+                  const Spacer(),
+                  Text(
+                    DateFormat('dd-MM').format(notes.dateCreated),
+                    style: kSmallTextStyle,
+                  ),
+                ],
               ),
             ],
           ),

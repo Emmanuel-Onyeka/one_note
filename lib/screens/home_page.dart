@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:one_note_clone/model/data_class.dart';
+import 'package:provider/provider.dart';
 import './grid.dart';
 import './user_info.dart';
 import '../constants.dart';
@@ -20,6 +22,16 @@ class _HomePageState extends State<HomePage> {
   // Navigates to the home or Notebook page based on its value
   bool isHome = true;
   bool isList = true;
+  bool _is_init = true;
+
+  @override
+  void didChangeDependencies() {
+    if (_is_init) {
+      Provider.of<DataClass>(context, listen: false).setNote();
+      _is_init = false;
+    }
+    super.didChangeDependencies();
+  }
 
   @override
   void dispose() {

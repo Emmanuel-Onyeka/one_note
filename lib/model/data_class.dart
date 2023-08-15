@@ -1,52 +1,52 @@
 import 'package:flutter/foundation.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'note_model.dart';
 
 class DataClass extends ChangeNotifier {
-  List<Note> _userNotesList = [
-    Note(
-      id: DateTime.now().toIso8601String(),
-      title: 'Learning Schedule',
-      body: 'MVVM, folder structure, Restful APIs',
-      category: 'Programing',
-      dateCreated: DateTime.now(),
-    ),
-    Note(
-      id: DateTime.now().toIso8601String(),
-      title: 'Learning Schedule',
-      body: 'MVVM, folder structure, Restful APIs',
-      category: 'Python',
-      dateCreated: DateTime.now(),
-    ),
-    Note(
-      id: DateTime.now().toIso8601String(),
-      title: 'Learning Schedule',
-      body: 'MVVM, folder structure, Restful APIs',
-      category: 'Flutter',
-      dateCreated: DateTime.now(),
-    ),
-    Note(
-      id: DateTime.now().toIso8601String(),
-      title: 'Learning Schedule',
-      body: 'MVVM, folder structure, Restful APIs',
-      category: 'Python',
-      dateCreated: DateTime.now(),
-    ),
-    Note(
-      id: DateTime.now().toIso8601String(),
-      title: 'Learning Schedule',
-      body: 'MVVM, folder structure, Restful APIs',
-      category: 'Flutter',
-      dateCreated: DateTime.now(),
-    ),
-  ];
+  var _db_notes = FirebaseFirestore.instance.collection('notes');
+
+  List<Note> _userNotesList = [];
 
   List<Note> get userList {
     return _userNotesList;
   }
 
-  void addNote(Note note) {
-    _userNotesList.add(note);
+  void addNote(Note note) async {
+    var db_response = await _db_notes.add({
+      'title': note.title,
+      'category': note.category,
+      'body': note.body,
+      'dateCreated': Timestamp.fromDate(note.dateCreated),
+    });
 
+    Note newNote = Note(
+      id: db_response.id,
+      title: note.title,
+      body: note.body,
+      category: note.category,
+      dateCreated: note.dateCreated,
+    );
+    _userNotesList.add(newNote);
+
+    notifyListeners();
+  }
+
+  Future<void> setNote() async {
+    var db = await _db_notes.get();
+    List<Map<String, dynamic>> extractedData = [];
+    List<Note> db_notes_list = [];
+
+    db.docs.forEach((element) {
+      var date = element.data()['dateCreated'] as Timestamp;
+      db_notes_list.add(Note(
+        id: element.id,
+        title: element.data()['title'],
+        body: element.data()['body'],
+        category: element.data()['category'],
+        dateCreated: date.toDate(),
+      ));
+    });
+    _userNotesList = db_notes_list;
     notifyListeners();
   }
 
@@ -75,7 +75,14 @@ class DataClass extends ChangeNotifier {
     );
   }
 
-  void updateNote(String noteId, Note note) {
+  Future<void> updateNote(String noteId, Note note) async {
+    await _db_notes.doc(noteId).set({
+      'title': note.title,
+      'category': note.category,
+      'body': note.body,
+      'dateCreated': Timestamp.fromDate(note.dateCreated),
+    });
+
     int noteIndex = _userNotesList.indexWhere(
       (element) => element.id == noteId,
     );
@@ -84,7 +91,9 @@ class DataClass extends ChangeNotifier {
     notifyListeners();
   }
 
-  void deleteNote(String id) {
+  Future<void> deleteNote(String id) async {
+    await _db_notes.doc(id).delete();
+
     int noteIndex = _userNotesList.indexWhere(
       (element) => element.id == id,
     );

@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:one_note_clone/screens/home_page.dart';
 import 'package:provider/provider.dart';
 import './model/data_class.dart';
 import './screens/note_details_screen.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
